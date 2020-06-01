@@ -8,16 +8,59 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.8.1</version>
+        <version>3.8.0</version>
         <configuration>
           <source>1.8</source>
           <target>1.8</target>
         </configuration>
       </plugin>
-    </plugins>
- </build>
-   
+        <plugin>
+                <groupId>net.masterthought</groupId>
+   				 <artifactId>maven-cucumber-reporting</artifactId>
+   				 <version>4.10.0</version>
+                <executions>
+                    <execution>
+                        <id>execution</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+                            <projectName>cucumber-jvm-example</projectName>
+                            <!-- optional, per documentation set this to "true" to bypass generation of Cucumber Reports entirely, defaults to false if not specified -->
+                            <skip>false</skip>
+                            <!-- output directory for the generated report -->
+                            <outputDirectory>${project.build.directory}/cucumber-jvm-report</outputDirectory>
+                            <inputDirectory>${project.build.directory}</inputDirectory>
+                            <!-- optional, defaults to outputDirectory if not specified -->
+                            <!--  cucumberOutput>${project.build.directory}</cucumberOutput>-->
+                            <enableFlashCharts>true</enableFlashCharts>
+                               <jsonFiles>
+                                <!-- supports wildcard or name pattern -->
+                                <param>**/*.json</param>
+                            </jsonFiles>
+                                                    
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+      
   
+                <plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-surefire-plugin</artifactId>
+					<version>2.19.1</version>
+					<configuration>
+					<testFailureIgnore>true</testFailureIgnore>
+					<testSourceDirectory>C:\Sanket\GITHUBRepository\BQ_BDD_Maven_Sanity\MavenProj\src\test\java</testSourceDirectory> 
+						<includes>
+							<include>**/*runner.java</include>
+						</includes>
+						</configuration>
+						</plugin>
+                        </plugins>
+			 </build>
+     
 <dependencies>
 <!-- https://mvnrepository.com/artifact/io.cucumber/cucumber-core -->
 <dependency>

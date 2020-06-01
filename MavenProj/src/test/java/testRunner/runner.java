@@ -11,8 +11,7 @@ import cucumber.api.CucumberOptions;
 glue="stepDefinitions",
 dryRun=false,
 monochrome=true,
-plugin= {"pretty","html:test-output"}
-		)
+plugin={"pretty","html:target/cucumber-report-html","json:target/cucumber.json","junit:target/cucumber.xml"})
 public class runner {
 }
 

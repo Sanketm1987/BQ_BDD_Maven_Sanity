@@ -13,7 +13,9 @@ public class PlaceP550  {
 
 	
 public WebDriver cdriver;
-String bundle ="/html/body/app-root/div/app-account-frame/app-questionaire/div[2]/div/div/div[1]/div/div/div/app-configurator/div[1]/form/div[2]/app-section/app-section[2]/div/app-question[42]/div/div[1]/div/div/ng-select/div/div/div[3]/input";
+//String bundle ="/html/body/app-root/div/app-account-frame/app-questionaire/div[2]/div/div/div[1]/div/div/div/app-configurator/div[1]/form/div[2]/app-section/app-section[2]/div/app-question[42]/div/div[1]/div/div/ng-select/div/div/div[3]/input";
+String bundle="//*[@id='QE550_ZMRegular|Q-4527']//div[2]";
+
 waitHelper wh;
 createAccount ca1;
 static String accountnumber1;	
@@ -38,10 +40,10 @@ public PlaceP550(WebDriver rdriver)
 	//By selectsub=By.xpath("//div[contains(text(),'Zakelijk Mobiel - Subscriptions')]");
 	By selectsub=By.xpath("//*[@id='productInfo']");
 	
-	By proposition=By.xpath("//*[@id='mat-radio-8']/label/div[1]/div[2]");
+	By proposition=By.xpath("//*[@id='mat-radio-5']/label/div[2]/div");
 	By subscription =By.xpath("//*[@id='subscriptionRadio'][2]");
-	//By databundle =By.xpath("//*[@id='dropDownValue']/div/div/div[3]/input");
-	By databundle = By.xpath(bundle);
+	By databundle =By.xpath("//ng-select[@ng-reflect-name='QE550_ZMRegular|Q-4527']/div/div/div[3]/input");
+	//By databundle = By.xpath(bundle);
 	By bundlesize =By.xpath("//span[contains(text(),'3GB')]");
 	By salesforce =By.xpath("//*[@id='QE550_ZMRegular|Q-3296']/div/input");
 	By calcprice =By.id("calculatePriceBtn");
@@ -65,17 +67,17 @@ public PlaceP550(WebDriver rdriver)
 		cdriver.findElement(mobileorder1).click();
 		cdriver.switchTo().frame("Wrapper");*/
 //New code removed
-		Thread.sleep(2000);
+		Thread.sleep(4000);
 		System.out.println(" Trying to fetch account number now");
 		accountnumber1=ca1.onlyaccount;
-	 System.out.println(" Received Acoount numer is "+accountnumber1);
+	 System.out.println(" Received Account number is "+accountnumber1);
 	 Thread.sleep(3000);
 	cdriver.findElement(accountid).sendKeys(accountnumber1);
- 	Thread.sleep(4000);
+		Thread.sleep(4000);
 		String abc=cdriver.getTitle();
 		System.out.println("Currently on  "+abc+"  page");
 		
-	//cdriver.findElement(accountid).sendKeys("900218990");
+	
 		cdriver.findElement(searchButton).click();
 		Thread.sleep(2000);
 		cdriver.findElement(selectAccount).click();
@@ -98,8 +100,7 @@ public PlaceP550(WebDriver rdriver)
 		cdriver.findElement(proposition).click();
 		Thread.sleep(3000);
 		cdriver.findElement(subscription).click();
-		Thread.sleep(2000);
-		cdriver.findElement(databundle).click();
+		Thread.sleep(3000);
 		cdriver.findElement(databundle).sendKeys("3GB");
 		cdriver.findElement(databundle).sendKeys(Keys.ENTER);
 		

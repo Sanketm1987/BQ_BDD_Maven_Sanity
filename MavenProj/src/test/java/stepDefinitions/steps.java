@@ -6,6 +6,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import cucumber.api.PendingException;
 import cucumber.api.java.en.*;
 import junit.framework.Assert;
+import pageObjects.HVcheckDBstatus;
 import pageObjects.LoginSCOE2;
 import pageObjects.Place510HV;
 import pageObjects.PlaceP550;
@@ -20,6 +21,7 @@ public createAccount ca;
 public PlaceP550 po;
 public checkCLADB cdb;
 public Place510HV bhv;
+public HVcheckDBstatus hvdb;
 
 static String environment;
 	
@@ -127,6 +129,12 @@ public void enter_Account_to_place_HostedVoice_order() throws Throwable {
 public void enter_details_for_HostedVoice_order() throws Throwable {
 	bhv.placeBHVorder();
     
+}
+@Given("^User validate Hosted Voice order status in DB$")
+public void user_validate_Hosted_Voice_order_status_in_DB() throws Throwable {
+	String env=environment;
+	hvdb=new HVcheckDBstatus();
+    hvdb.HVorderStatusInDB(env);
 }
 
 

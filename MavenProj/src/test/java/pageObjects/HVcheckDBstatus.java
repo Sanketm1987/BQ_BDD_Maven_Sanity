@@ -1,30 +1,26 @@
 package pageObjects;
 
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 
-import org.hamcrest.core.IsNull;
+import javax.swing.JFrame;
+
 import org.junit.Assert;
-import org.openqa.selenium.WebDriver;
 
 import stepDefinitions.steps;
 
-public class checkCLADB {
-	PlaceP550 pl1;
+public class HVcheckDBstatus {
+	Place510HV HvDb1;
 	steps st1;
 
 	static String orderidcheck;	
 	static String neworder;
 	Connection conn;
 		
-public void checkorderInDB(String env1) throws SQLException, InterruptedException{
+public void HVorderStatusInDB(String env1) throws SQLException, InterruptedException{
 	/*JFrame frame;
 	 ResultSet result = null;
 	
@@ -66,11 +62,11 @@ public void checkorderInDB(String env1) throws SQLException, InterruptedExceptio
 	  con.close(); */
 	
 ///=======================================================================================//
-	JFrame frame;
 	ResultSet result=null;
 	
-	String orderstat;
-	String orderstat2;
+	String procStatus;
+	String procStage;
+	String xactive;
 
 	System.out.println("Loading Oracle JDBC driver Now and Environment is ........"+env1);
 	
@@ -96,7 +92,7 @@ public void checkorderInDB(String env1) throws SQLException, InterruptedExceptio
 	    Thread.sleep(25000);
 
 	    Statement stmt = conn.createStatement();
-	    orderidcheck=pl1.neworder;
+	    orderidcheck=HvDb1.neworderhv;
 	    System.out.println("Order Id Received is    "+orderidcheck);
 	    if(orderidcheck == null)
 	    {
@@ -107,26 +103,42 @@ public void checkorderInDB(String env1) throws SQLException, InterruptedExceptio
 	    }
 	    
 	    Thread.sleep(10000);		
-	    result = stmt.executeQuery("select x_active ,x_ord_proc_status from table_contr_itm where x_order_no=" + "\'"+orderidcheck+ "\'");
+	    result = stmt.executeQuery("select x_ord_proc_stage,X_ORD_PROC_STATUS,X_Active from table_contr_itm where x_order_no=" + "\'"+orderidcheck+ "\'");
 	        while(result.next()){
 			        System.out.println("Entering into While loop");
-			        orderstat = result.getString("x_ord_proc_status");
-			        orderstat2= result.getString("X_ACTIVE");
+			        procStatus = result.getString("X_ORD_PROC_STATUS");
+			        procStage= result.getString("x_ord_proc_stage");
+			        xactive = result.getString("X_Active");
+			        
 			       // System.out.println("Processing  Status   " + orderstat);
-			        System.out.println("Order Status is  " +orderstat2);
+			        System.out.println("Order Status is  " +xactive);
+			        System.out.println("Order Stages   " +procStage);
+			        System.out.println("Process Status is  " +procStatus);
 		    
-	        if(!orderstat2.equals("Active"))
+	        if(!xactive.equals("Active"))
 	        {
 	        	for(int i=0;i<20;i++){ 
-	        		Thread.sleep(80000);
-	        		result = stmt.executeQuery("select x_active ,x_ord_proc_status from table_contr_itm where x_order_no=" + "\'"+orderidcheck+ "\'");
+	        		Thread.sleep(90000);
+	        		result = stmt.executeQuery("select x_ord_proc_stage,X_ORD_PROC_STATUS,X_Active from table_contr_itm where x_order_no=" + "\'"+orderidcheck+ "\'");
 	     	    while(result.next()){
 				   System.out.println("Entering into While loop"+i);
-			        orderstat = result.getString("x_ord_proc_status");
-			        orderstat2= result.getString("X_ACTIVE");
-			      //  System.out.println("Processing Status   " + orderstat);
-			        System.out.println("Order Status is  " +orderstat2);
-			        if (orderstat2.equals("Active"))
+				   procStatus = result.getString("X_ORD_PROC_STATUS");
+			        procStage= result.getString("x_ord_proc_stage");
+			        xactive = result.getString("X_Active");
+			        
+			       // System.out.println("Processing  Status   " + orderstat);
+			        System.out.println("Order Status is  " +xactive);
+			        System.out.println("Order Stages   " +procStage);
+			        System.out.println("Process Status is  " +procStatus);
+			        
+			        if(procStage.equals("Portal Function Group") && procStatus.equals("Completed") && xactive.equals("In-Provisioning"))
+			        {
+			        	
+			        	System.out.println("Work IN Progress");
+			        	
+			        }
+			        	
+			        if (xactive.equals("Active"))
 			        {
 			        	System.out.println("Order is completed  successfullly");
 			        //	frame = new JFrame();
@@ -166,14 +178,5 @@ public void checkorderInDB(String env1) throws SQLException, InterruptedExceptio
 	        
 	        
        }
+
 }
-
-
-	    
-	    
-
-	   
-
-	    
-
-

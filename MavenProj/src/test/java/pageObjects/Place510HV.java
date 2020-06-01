@@ -1,6 +1,7 @@
 package pageObjects;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
@@ -13,7 +14,7 @@ public class Place510HV {
 	createAccount ca1;
 	static String accountnumberHv;	
 	static String neworderhv;
-	String block="//*[@id='myform']/div/app-section[1]/app-section[8]/div/app-question[2]/div/div[3]/div/div/div/div[2]/form/div/table/tbody/tr/td[2]/div/div/div/select";
+	String block="//*[@id='myform']/div/app-section[1]/app-section[8]/div/app-question/div/div[3]/div/div/div/div[2]/form/div/table/tbody/tr/td[2]/div/div/div/select";
 	String closewindow="//*[@id='myform']/div/app-section[1]/app-section[8]/div/app-question[2]/div/div[3]/div/div/div/div[1]/button/span";
 	public Place510HV(WebDriver rdriver)
 	{
@@ -31,7 +32,7 @@ public class Place510HV {
 	
 		
 	//orderPage xpaths
-		By unlimited =By.xpath("//mat-radio-button[@ng-reflect-value='Unlimited']/label/div/div[2]");
+		By unlimited =By.xpath("//*[@id='mat-radio-5']/label/div[2]/div");
 		By combiseat =By.xpath("//*[@id='mat-slide-toggle-2']/label/div/div");
 		By combiseat1 =By.xpath("//*[@id='QE005_1_unl_prof|Q-7805']/div[1]/input");
 		By basicfixedonly =By.xpath("//*[@id='mat-slide-toggle-3']/label/div/div");
@@ -77,8 +78,7 @@ public class Place510HV {
 
 	public void BHVselectAccount() throws InterruptedException
 	{
-	
-		Thread.sleep(2000);
+		Thread.sleep(8000);
 		System.out.println(" Trying to fetch account number now");
 		accountnumberHv=ca1.onlyaccount;
 	 System.out.println(" Received Acoount numer is "+accountnumberHv);
@@ -105,7 +105,11 @@ public class Place510HV {
     
    	public void placeBHVorder() throws InterruptedException
 	{
-   		Thread.sleep(2000);
+   		
+   		Thread.sleep(4000);
+   		//cdriver.findElement(By.xpath("//*[@id='QE510_1_generic|Q-7896']/div/input")).sendKeys("1.111111");
+   		//JavascriptExecutor executor = (JavascriptExecutor) cdriver;
+		//executor.executeScript("arguments[0].click();", unlimited);
    		cdriver.findElement(unlimited).click();
    		Thread.sleep(4000);
    		cdriver.findElement(combiseat).click();
@@ -153,12 +157,13 @@ public class Place510HV {
    		cdriver.findElement(geobutton).click();
    		Thread.sleep(2000);
    		cdriver.findElement(areacode).sendKeys("010");
+   		Thread.sleep(2000);
    		cdriver.findElement(blocksize).click();
-   		cdriver.findElement(blocksize).sendKeys("10");
+   		cdriver.findElement(blocksize).sendKeys("1");
    		cdriver.findElement(blocksize).sendKeys(Keys.ENTER);
    		Thread.sleep(4000);
    		cdriver.findElement(validate).click();
-   		Thread.sleep(5000);
+   		Thread.sleep(6000);
    		cdriver.findElement(Reserve).click();
    		Thread.sleep(5000);
    		cdriver.findElement(closewin).click();
